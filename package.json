@@ -1,0 +1,19 @@
+{
+  "name": "trz-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tasks": "node asyncTasks.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajfojas/trz-practice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajfojas/trz-practice/issues"
+  },
+  "homepage": "https://github.com/ajfojas/trz-practice#readme"
+}
