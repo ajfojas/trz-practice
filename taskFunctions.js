@@ -95,7 +95,54 @@ const task3 = async timeNow => {
   }
 };
 
-const task4 = async () => {};
+const task4 = async timeNow => {
+  /**
+   * Task 4. Repeat Task 2 (use `taskFour_[fileNumber]` for the filesNames) except some tasks should be written to a directory `notHome` that does not exist instead of the output directory
+   * These failures should be set to occur 30% of the time on average at random
+   * When a failure occurs log `File [fileNumber] failed to write` to the console
+   * The rest of the writes should succeed
+   * One task selected at random should also have a 5 second delay introduced before the write occurs
+   * Log `Starting 5s delay at [unix timestamp]` when starting and `Ending 5s delay at [unix timestamp]` when completing
+   * It's OK if sometimes the failing and delayed file writes are the same
+   */
+
+  let delay5sec = () => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, 5000);
+    });
+  };
+
+  try {
+    let numFiles = timeNow % 10;
+    let delayedFile = Math.floor(Math.random() * numFiles);
+    delayedFile = delayedFile < 1 ? 1 : delayedFile;
+
+    for (let i = 1; i <= numFiles; i++) {
+      if (i === delayedFile) {
+        console.log(`Starting 5s delay at ${Date.now()}`);
+        await delay5sec();
+        console.log(`Ending 5s delay at ${Date.now()}`);
+      }
+
+      let randomPercent = Math.floor(Math.random() * 100);
+      if (randomPercent <= 30) {
+        await fs.writeFile(`./notHome/taskFour_${i}`, '', err => {
+          if (err) console.log(`File ${i} failed to write`);
+        });
+      } else {
+        console.log(`Creating file ${i}`);
+        await fs.writeFile(`./${timeNow}/taskFour_${i}`, '', err => {
+          if (err) throw err;
+        });
+        console.log(`Finished creating file ${i}`);
+      }
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 
 const task5 = async () => {};
 
