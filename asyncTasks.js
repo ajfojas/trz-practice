@@ -40,9 +40,9 @@ const taskFunctions = require('./taskFunctions');
     console.log(`Finished task ${task++}`);
 
     // // Task 5
-    // console.log(`Starting task ${task}`);
-    // await taskFunctions.task5();
-    // console.log(`Finished task ${task++}`);
+    console.log(`Starting task ${task}`);
+    await taskFunctions.task5(timeNow);
+    console.log(`Finished task ${task++}`);
 
     // // Task 6
     // console.log(`Starting task ${task}`);
