@@ -25,32 +25,39 @@ const taskFunctions = require('./taskFunctions');
     console.log(`Finished task ${task++}`);
 
     // // Task 2
-    // console.log(`Starting task ${++task}`);
-    // console.log(`Finished task ${task}`);
+    console.log(`Starting task ${task}`);
+    await taskFunctions.task2(timeNow);
+    console.log(`Finished task ${task++}`);
 
     // // Task 3
-    // console.log(`Starting task ${++task}`);
-    // console.log(`Finished task ${task}`);
+    // console.log(`Starting task ${task}`);
+    // await taskFunctions.task3();
+    // console.log(`Finished task ${task++}`);
 
     // // Task 4
-    // console.log(`Starting task ${++task}`);
-    // console.log(`Finished task ${task}`);
+    // console.log(`Starting task ${task}`);
+    // await taskFunctions.task4();
+    // console.log(`Finished task ${task++}`);
 
     // // Task 5
-    // console.log(`Starting task ${++task}`);
-    // console.log(`Finished task ${task}`);
+    // console.log(`Starting task ${task}`);
+    // await taskFunctions.task5();
+    // console.log(`Finished task ${task++}`);
 
     // // Task 6
-    // console.log(`Starting task ${++task}`);
-    // console.log(`Finished task ${task}`);
+    // console.log(`Starting task ${task}`);
+    // await taskFunctions.task6();
+    // console.log(`Finished task ${task++}`);
 
     // // Task 7
-    // console.log(`Starting task ${++task}`);
-    // console.log(`Finished task ${task}`);
+    // console.log(`Starting task ${task}`);
+    // await taskFunctions.task7();
+    // console.log(`Finished task ${task++}`);
 
     // // Task 8
-    // console.log(`Starting task ${++task}`);
-    // console.log(`Finished task ${task}`);
+    // console.log(`Starting task ${task}`);
+    // await taskFunctions.task8();
+    // console.log(`Finished task ${task++}`);
   } catch (error) {
     throw error;
   }
