@@ -267,7 +267,7 @@ const task7 = async timeNow => {
       }
 
       let randomPercent = Math.floor(Math.random() * 100);
-      if (randomPercent <= 50) {
+      if (randomPercent <= 30) {
         await fs.writeFile(`./notHome/taskSeven_${i}`, '', err => {
           if (err) console.log(`File ${i + 1} failed to write`);
         });
@@ -289,7 +289,58 @@ const task7 = async timeNow => {
   }
 };
 
-const task8 = async () => {};
+const task8 = async timeNow => {
+  /**
+   * Task 8. Repeat task 4 except when a failure occurs 'reattempt' to write that file after a 250ms delay
+   * If a file fails to write more than once double the delay for each subsequent reattempt for that file
+   * Log `Retrying file [filename]` before starting retries instead of `Creating file [fileName]`
+   */
+
+  let delayXsec = timeDelay => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, timeDelay);
+    });
+  };
+
+  try {
+    let numFiles = timeNow % 10;
+    let delayedFile = Math.floor(Math.random() * numFiles);
+    delayedFile = delayedFile < 1 ? 1 : delayedFile;
+    let numFails = 0;
+    let retry = false;
+
+    for (let i = 1; i <= numFiles; i++) {
+      console.log(retry ? `Retrying file ${i}` : `Creating file ${i}`);
+      if (i === delayedFile) {
+        console.log(`Starting 5s delay at ${Date.now()}`);
+        await delayXsec(5000);
+        console.log(`Ending 5s delay at ${Date.now()}`);
+      }
+
+      let randomPercent = Math.floor(Math.random() * 100);
+      if (randomPercent <= 30) {
+        await fs.writeFile(`./notHome/taskEight_${i}`, '', err => {
+          if (err) console.log(`File ${i + 1} failed to write`);
+        });
+        i--;
+        numFails++;
+        retry = true;
+        await delayXsec(250 * Math.pow(2, numFails));
+      } else {
+        await fs.writeFile(`./${timeNow}/taskEight_${i}`, '', err => {
+          if (err) throw err;
+        });
+        console.log(`Finished creating file ${i}`);
+        numFails = 0;
+        retry = false;
+      }
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 
 module.exports = {
   task1,
