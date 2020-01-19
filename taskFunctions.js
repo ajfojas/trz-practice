@@ -8,13 +8,17 @@ const task1 = async timeNow => {
    * Log `Finished creating file [fileName]` after the file is written
    */
 
-  let numFiles = timeNow % 10;
-  for (let i = 1; i <= numFiles; i++) {
-    console.log(`Creating file ${i}`);
-    await fs.writeFile(`./${timeNow}/taskOne_${i}`, '', err => {
-      if (err) throw err;
-    });
-    console.log(`Finished creating file ${i}`);
+  try {
+    let numFiles = timeNow % 10;
+    for (let i = 1; i <= numFiles; i++) {
+      console.log(`Creating file ${i}`);
+      await fs.writeFile(`./${timeNow}/taskOne_${i}`, '', err => {
+        if (err) throw err;
+      });
+      console.log(`Finished creating file ${i}`);
+    }
+  } catch (error) {
+    throw error;
   }
 };
 
