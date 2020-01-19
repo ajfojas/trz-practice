@@ -71,6 +71,7 @@ const task3 = async timeNow => {
     delayedFile = delayedFile < 1 ? 1 : delayedFile;
 
     for (let i = 1; i <= numFiles; i++) {
+      console.log(`Creating file ${i}`);
       if (i === delayedFile) {
         console.log(`Starting 5s delay at ${Date.now()}`);
         await delay5sec();
@@ -83,7 +84,6 @@ const task3 = async timeNow => {
           if (err) console.log(`File ${i} failed to write`);
         });
       } else {
-        console.log(`Creating file ${i}`);
         await fs.writeFile(`./${timeNow}/taskThree_${i}`, '', err => {
           if (err) throw err;
         });
@@ -120,6 +120,7 @@ const task4 = async timeNow => {
     delayedFile = delayedFile < 1 ? 1 : delayedFile;
 
     for (let i = 1; i <= numFiles; i++) {
+      console.log(`Creating file ${i}`);
       if (i === delayedFile) {
         console.log(`Starting 5s delay at ${Date.now()}`);
         await delay5sec();
@@ -132,7 +133,6 @@ const task4 = async timeNow => {
           if (err) console.log(`File ${i} failed to write`);
         });
       } else {
-        console.log(`Creating file ${i}`);
         await fs.writeFile(`./${timeNow}/taskFour_${i}`, '', err => {
           if (err) throw err;
         });
@@ -149,7 +149,6 @@ const task5 = async timeNow => {
    * Task 5. Repeat task 3 except when a file fails to write the whole task should fail
    */
 
-  let failed = false;
   let delay5sec = () => {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -162,9 +161,11 @@ const task5 = async timeNow => {
     let numFiles = timeNow % 10;
     let delayedFile = Math.floor(Math.random() * numFiles);
     delayedFile = delayedFile < 1 ? 1 : delayedFile;
+    let failed = false;
 
     for (let i = 1; i <= numFiles; i++) {
       if (failed) break;
+      console.log(`Creating file ${i}`);
       if (i === delayedFile) {
         console.log(`Starting 5s delay at ${Date.now()}`);
         await delay5sec();
@@ -178,7 +179,6 @@ const task5 = async timeNow => {
           if (err) console.log(`File ${i} failed to write`);
         });
       } else {
-        console.log(`Creating file ${i}`);
         await fs.writeFile(`./${timeNow}/taskFive_${i}`, '', err => {
           if (err) throw err;
         });
@@ -195,7 +195,6 @@ const task6 = async timeNow => {
    * Task 6. Repeat task 4 except when a file fails to write the whole task should fail
    */
 
-  let failed = false;
   let delay5sec = () => {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -208,9 +207,11 @@ const task6 = async timeNow => {
     let numFiles = timeNow % 10;
     let delayedFile = Math.floor(Math.random() * numFiles);
     delayedFile = delayedFile < 1 ? 1 : delayedFile;
+    let failed = false;
 
     for (let i = 1; i <= numFiles; i++) {
       if (failed) break;
+      console.log(`Creating file ${i}`);
       if (i === delayedFile) {
         console.log(`Starting 5s delay at ${Date.now()}`);
         await delay5sec();
@@ -224,7 +225,6 @@ const task6 = async timeNow => {
           if (err) console.log(`File ${i} failed to write`);
         });
       } else {
-        console.log(`Creating file ${i}`);
         await fs.writeFile(`./${timeNow}/taskSix_${i}`, '', err => {
           if (err) throw err;
         });
@@ -236,7 +236,58 @@ const task6 = async timeNow => {
   }
 };
 
-const task7 = async () => {};
+const task7 = async timeNow => {
+  /**
+   * Task 7. Repeat task 3 except when a failure occurs 'reattempt' to write that file after a 250ms delay
+   * If a file fails to write more than once double the delay for each subsequent reattempt for that file
+   * Log `Retrying file [filename]` before starting retries instead of `Creating file [fileName]`
+   */
+
+  let delayXsec = timeDelay => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, timeDelay);
+    });
+  };
+
+  try {
+    let numFiles = timeNow % 10;
+    let delayedFile = Math.floor(Math.random() * numFiles);
+    delayedFile = delayedFile < 1 ? 1 : delayedFile;
+    let numFails = 0;
+    let retry = false;
+
+    for (let i = 1; i <= numFiles; i++) {
+      console.log(retry ? `Retrying file ${i}` : `Creating file ${i}`);
+      if (i === delayedFile) {
+        console.log(`Starting 5s delay at ${Date.now()}`);
+        await delayXsec(5000);
+        console.log(`Ending 5s delay at ${Date.now()}`);
+      }
+
+      let randomPercent = Math.floor(Math.random() * 100);
+      if (randomPercent <= 50) {
+        await fs.writeFile(`./notHome/taskSeven_${i}`, '', err => {
+          if (err) console.log(`File ${i + 1} failed to write`);
+        });
+        i--;
+        numFails++;
+        retry = true;
+        await delayXsec(250 * Math.pow(2, numFails));
+      } else {
+        await fs.writeFile(`./${timeNow}/taskSeven_${i}`, '', err => {
+          if (err) throw err;
+        });
+        console.log(`Finished creating file ${i}`);
+        numFails = 0;
+        retry = false;
+      }
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 
 const task8 = async () => {};
 

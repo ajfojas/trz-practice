@@ -46,13 +46,13 @@ const taskFunctions = require('./taskFunctions');
 
     // // Task 6
     console.log(`Starting task ${task}`);
-    await taskFunctions.task6(timeNow);
+    // await taskFunctions.task6(timeNow);
     console.log(`Finished task ${task++}`);
 
     // // Task 7
-    // console.log(`Starting task ${task}`);
-    // await taskFunctions.task7();
-    // console.log(`Finished task ${task++}`);
+    console.log(`Starting task ${task}`);
+    await taskFunctions.task7(timeNow);
+    console.log(`Finished task ${task++}`);
 
     // // Task 8
     // console.log(`Starting task ${task}`);
